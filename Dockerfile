@@ -45,10 +45,9 @@ RUN apt update --fix-missing && \
 COPY --from=builder $binDir $binDir
 RUN chmod 774 $binDir/*
 
-## ADDING FIM GROUP ##
-#ARG GroupID=1370800235
+## ADDING USER GROUP ##
 ARG id=1001
-ARG name=fim
+ARG name=user
 #RUN addgroup --gid $GroupID $GroupName
 RUN useradd -Ums /bin/bash -u $id $name
 USER $name
