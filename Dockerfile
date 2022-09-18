@@ -1,5 +1,5 @@
 ## Dockerfile for manuscript building from Latex
-FROM ubuntu:20.04 as builder
+FROM ubuntu:22.04 as builder
 ARG dataDir=/data
 ARG projectDir=/src
 ARG binDir=/usr/local/bin
@@ -33,7 +33,7 @@ RUN unzip texcount.zip
 RUN mv texcount/texcount.pl $binDir
 
 ################################################################################
-FROM ubuntu:20.04 as development
+FROM ubuntu:22.04 as development
 
 ## INSTALLS
 RUN apt update --fix-missing && \
@@ -43,12 +43,10 @@ RUN apt update --fix-missing && \
 
 ## Copy over packages
 COPY --from=builder $binDir $binDir
-RUN chmod 774 $binDir/*
 
 ## ADDING USER GROUP ##
 ARG id=1001
 ARG name=user
-#RUN addgroup --gid $GroupID $GroupName
 RUN useradd -Ums /bin/bash -u $id $name
 USER $name
 WORKDIR /home/$name
