@@ -5,7 +5,7 @@ Dockerfile used for a LaTex environment.
 
 For a development image, execute: 
 
-`docker build --build-arg id=\`$id -u\` --build-arg \`$id -nu\` --target development -t <image_name>:<tag> <project_directory>`
+``docker build --build-arg id=`$id -u` --build-arg `$id -nu` --target development -t <image_name>:<tag> <project_directory>``
 
 For a runtime image, execute: 
 
@@ -21,4 +21,4 @@ For iteractive use with a development container:
 
 For non-iteractive use with a runtime container:
 
-`docker run --rm -v <project_directory>:/src <image_name>:<tag> <your_make_file> <your_make_file_arguments`
+`docker run --rm -v <project_directory>:/src <image_name>:<tag> <your_make_file_arguments>`
