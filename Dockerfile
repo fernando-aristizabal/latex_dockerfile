@@ -16,24 +16,30 @@ RUN apt update --fix-missing && \
 WORKDIR $tmpDir
 
 # latex expand: used to flatten tex files with "input" or "include" commands.
-RUN wget https://mirrors.ctan.org/support/latexpand.zip
-RUN unzip latexpand.zip 
-RUN mv latexpand/latexpand $binDir
+RUN wget https://mirrors.ctan.org/support/latexpand.zip && \
+    unzip latexpand.zip && \
+    mv latexpand/latexpand $binDir
 
 # latex diff: used to create difference document with additions and removals
-RUN wget https://mirrors.ctan.org/support/latexdiff.zip 
-RUN unzip latexdiff.zip
-WORKDIR $tmpDir/latexdiff
-RUN make install
+RUN wget https://mirrors.ctan.org/support/latexdiff.zip && \
+    unzip latexdiff.zip && \
+    cd $tmpDir/latexdiff && \
+    make install
 WORKDIR $tmpDir
 
 # texcount: used to count characters, words, etc
-RUN wget https://mirrors.ctan.org/support/texcount.zip
-RUN unzip texcount.zip
-RUN mv texcount/texcount.pl $binDir
+RUN wget https://mirrors.ctan.org/support/texcount.zip && \
+    unzip texcount.zip && \
+    mv texcount/texcount.pl $binDir
 
 ################################################################################
+################################################################################
 FROM ubuntu:22.04 as development
+
+## LABELS
+LABEL version=""
+LABEL maintaner="Fernando Aristizabal"
+LABEL release-date=""
 
 ## INSTALLS
 RUN apt update --fix-missing && \
