@@ -37,9 +37,9 @@ RUN wget https://mirrors.ctan.org/support/texcount.zip && \
 FROM ubuntu:22.04 as development
 
 ## LABELS
-LABEL version=""
-LABEL maintaner="Fernando Aristizabal"
-LABEL release-date=""
+LABEL version="" && \
+      maintaner="Fernando Aristizabal" && \
+      release-date=""
 
 ## INSTALLS
 RUN apt update --fix-missing && \
