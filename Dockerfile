@@ -8,9 +8,9 @@ ARG tmpDir=/tmp
 
 ## INSTALLS
 RUN apt update --fix-missing && \
-    DEBIAN_FRONTEND=noninteractive apt install -y wget unzip make && \
+    DEBIAN_FRONTEND=noninteractive apt install -qy wget unzip make && \
     apt -y auto-remove && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf  /var/cache/apt/* /var/lib/apt/lists/*
 
 ## LATEX PACKAGES
 WORKDIR $tmpDir
@@ -36,16 +36,20 @@ RUN wget https://mirrors.ctan.org/support/texcount.zip && \
 ################################################################################
 FROM ubuntu:22.04 as development
 
+## SETTING ENV VARIABLES ##
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
+
 ## LABELS
-LABEL version="" && \
-      maintaner="Fernando Aristizabal" && \
+LABEL version="" \
+      maintaner="Fernando Aristizabal" \
       release-date=""
 
 ## INSTALLS
 RUN apt update --fix-missing && \
-    DEBIAN_FRONTEND=noninteractive apt install -y texlive-full perl-doc git && \
+    DEBIAN_FRONTEND=noninteractive apt install -qy texlive-full perl-doc git && \
     apt -y auto-remove && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf  /var/cache/apt/* /var/lib/apt/lists/*
 
 ## Copy over packages
 COPY --from=builder $binDir $binDir
