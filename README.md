@@ -6,14 +6,14 @@ Dockerfile used for a LaTex environment.
 For a development image, execute: 
 
 ```
-docker build --build-arg id=`$id -u` --build-arg `$id -nu` \
+docker build --build-arg=$(id -u) --build-arg=$(id -nu) \
 --target development -t <image_name>:<tag> <project_directory>
 ```
 
 For a runtime image, execute: 
 
 ```
-docker build --build-arg id=`$id -u` --build-arg `$id -nu` \ 
+docker build --build-arg=$(id -u) --build-arg=$(id -nu) \ 
 --target development -t <image_name>:<tag> <project_directory>
 ```
 
