@@ -3,21 +3,15 @@ Dockerfile used for a LaTex environment.
 
 ## Build Instructions
 
-For a development image, execute: 
+To build your image, execute: 
 
 ```
 docker build --build-arg id=`$id -u` --build-arg `$id -nu` \
---target development -t <image_name>:<tag> <project_directory>
+--target <target_stage> -t <image_name>:<tag> <project_directory>
 ```
-
-For a runtime image, execute: 
-
-```
-docker build --build-arg id=`$id -u` --build-arg `$id -nu` \ 
---target development -t <image_name>:<tag> <project_directory>
-```
-
-<project_directory> is a path to your LaTex source files.
+<project_directory> is a path to your LaTex source files, while <target_stage> represents the stage to target for compilation.
+The two options are "development" or "runtime" where runtime just includes the Makefile as the entry command.
+The development container should be targeted if a variety of utilities want to be used within the containers.
 
 ## Compile document
 

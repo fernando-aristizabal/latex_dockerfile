@@ -1,10 +1,12 @@
 ## Dockerfile for manuscript building from Latex
 FROM ubuntu:22.04 as builder
-ARG dataDir=/data
-ARG projectDir=/src
-ARG binDir=/usr/local/bin
-ARG manDir=/usr/local/man
-ARG tmpDir=/tmp
+
+## BUILD ARGS
+ARG dataDir=/data \
+    projectDir=/src \
+    binDir=/usr/local/bin \
+    manDir=/usr/local/man \
+    tmpDir=/tmp
 
 ## INSTALLS
 RUN apt update --fix-missing && \
@@ -36,14 +38,21 @@ RUN wget https://mirrors.ctan.org/support/texcount.zip && \
 ################################################################################
 FROM ubuntu:22.04 as development
 
+## BUILD ARGS
+ARG ID=1001 \
+    NAME=user \
+    VERSION="" \
+    MAINTANER="Fernando Aristizabal" \
+    RELEASE_DATE=""
+
 ## SETTING ENV VARIABLES ##
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 
 ## LABELS
-LABEL version="" \
-      maintaner="Fernando Aristizabal" \
-      release-date=""
+LABEL VERSION=$VERSION \
+      MAINTANER=$MAINTANER \
+      RELEASE_DATE=$RELEASE_DATE
 
 ## INSTALLS
 RUN apt update --fix-missing && \
@@ -55,11 +64,9 @@ RUN apt update --fix-missing && \
 COPY --from=builder $binDir $binDir
 
 ## ADDING USER GROUP ##
-ARG id=1001
-ARG name=user
-RUN useradd -Ums /bin/bash -u $id $name
-USER $name
-WORKDIR /home/$name
+RUN useradd -Ums /bin/bash -u $ID $NAME
+USER $NAME
+WORKDIR /home/$NAME
 
 ## ADD TO PATHS ##
 ENV PATH="$projectDir:${PATH}"
